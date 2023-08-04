@@ -1,4 +1,6 @@
-<?php include('./inc/connect.php') ?>
+<?php
+        require_once('./inc/connect.php');
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
