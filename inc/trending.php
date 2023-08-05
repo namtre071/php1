@@ -8,13 +8,13 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="btn__all">
-                        <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                        <a href="" class="primary-btn">View All <span class="arrow_right"></span></a>
                     </div>
                 </div>
             </div>
             <div class="row">
             <?php
-                $sql = "SELECT * FROM animes order by id desc";
+                $sql = "SELECT * FROM animes where is_trending = 1 order by id desc ";
                 $result = executeResult($sql);
                 foreach($result as $key){
                     $id_cate = $key['category'];
