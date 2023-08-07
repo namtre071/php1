@@ -1,5 +1,6 @@
 <?php
-        require_once('./inc/connect.php');
+       session_start();
+       require_once('./inc/connect.php');
 ?>
 <!DOCTYPE html>
 <html lang="zxx">

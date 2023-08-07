@@ -1,4 +1,5 @@
 <?php
+        session_start();
         require_once('./inc/connect.php');
         if (isset($_GET['id'])) {
             $id_cate_now = $_GET['id'];
@@ -57,7 +58,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="./index.php"><i class="fa fa-home"></i> Home</a>
                         <a href="./categories.html">Categories</a>
                         <span><?=$name_cate?></span>
                     </div>

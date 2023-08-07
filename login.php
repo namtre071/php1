@@ -1,3 +1,32 @@
+<?php
+    session_start();
+    require_once('./inc/connect.php');
+
+    if (isset($_POST['submit']) && $_POST["name"] != '' && $_POST["password"] != '') {
+        $name=$_POST['name'];
+        $password=$_POST['password'];
+        $query = "SELECT * FROM users WHERE username = '$name' ";
+        $result = mysqli_query($con, $query);
+        if (mysqli_num_rows($result)>0 ) {
+            $row = executeSingleResult($query);
+            $fullname = $row['name'];
+            if (password_verify($password, $row['password'])) {
+                // Successful login
+                $_SESSION['logined'] = true;
+                $_SESSION['username'] = $fullname;
+                header("Location: index.php");
+                exit();
+            } else {
+                // Invalid password
+                $error = "Invalid password";
+            }
+        } else {
+            // User not found
+            $error = "User not found";
+        }
+    
+    }
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -32,47 +61,7 @@
     </div>
 
     <!-- Header Section Begin -->
-    <header class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="header__logo">
-                        <a href="./index.html">
-                            <img src="img/logo.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="header__nav">
-                        <nav class="header__menu mobile-menu">
-                            <ul>
-                                <li><a href="./index.html">Homepage</a></li>
-                                <li><a href="./categories.html">Categories <span class="arrow_carrot-down"></span></a>
-                                    <ul class="dropdown">
-                                        <li><a href="./categories.html">Categories</a></li>
-                                        <li><a href="./anime-details.html">Anime Details</a></li>
-                                        <li><a href="./anime-watching.html">Anime Watching</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                        <li><a href="./signup.html">Sign Up</a></li>
-                                        <li><a href="./login.html">Login</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="./blog.html">Our Blog</a></li>
-                                <li><a href="#">Contacts</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="header__right">
-                        <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                        <a href="./login.html"><span class="icon_profile"></span></a>
-                    </div>
-                </div>
-            </div>
-            <div id="mobile-menu-wrap"></div>
-        </div>
-    </header>
+    <?php include('./inc/header.php') ?>
     <!-- Header End -->
 
     <!-- Normal Breadcrumb Begin -->
@@ -97,16 +86,18 @@
                 <div class="col-lg-6">
                     <div class="login__form">
                         <h3>Login</h3>
-                        <form action="#">
+                        <?php if(isset($error)) { echo "<p>$error</p>"; } ?>
+                        
+                        <form action="login.php" method="post">
                             <div class="input__item">
-                                <input type="text" placeholder="Email address">
+                                <input type="text" name="name" placeholder="Username">
                                 <span class="icon_mail"></span>
                             </div>
                             <div class="input__item">
-                                <input type="text" placeholder="Password">
+                                <input type="password" name="password" placeholder="Password">
                                 <span class="icon_lock"></span>
                             </div>
-                            <button type="submit" class="site-btn">Login Now</button>
+                            <button type="submit" name="submit" class="site-btn">Login Now</button>
                         </form>
                         <a href="#" class="forget_pass">Forgot Your Password?</a>
                     </div>
@@ -139,36 +130,7 @@
     <!-- Login Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="page-up">
-            <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="footer__nav">
-                        <ul>
-                            <li class="active"><a href="./index.html">Homepage</a></li>
-                            <li><a href="./categories.html">Categories</a></li>
-                            <li><a href="./blog.html">Our Blog</a></li>
-                            <li><a href="#">Contacts</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                      Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-
-                  </div>
-              </div>
-          </div>
-      </footer>
+    <?php include('./inc/footer.php'); ?>
       <!-- Footer Section End -->
 
       <!-- Search model Begin -->
