@@ -1,3 +1,9 @@
+<?php
+        require_once('./inc/connect.php');
+        if (isset($_GET['id'])) {
+            $id_cate_now = $_GET['id'];
+        }
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -34,7 +40,17 @@
     <!-- Header Section Begin -->
     <?php include './inc/header.php'; ?>
     <!-- Header End -->
-
+    <?php 
+        $sql = "SELECT * FROM animes where id =  " .$id_cate_now;
+        $result = executeResult($sql);
+        foreach($result as $key){
+            $id_cate = $key['category'];
+            $sql2 = "SELECT * FROM categories WHERE id = " .$id_cate;
+            $result1 = executeResult($sql2);
+            foreach($result1 as $key1){
+                $name_cate = $key1['name'];
+            ?>
+    ?>
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -43,7 +59,7 @@
                     <div class="breadcrumb__links">
                         <a href="./index.html"><i class="fa fa-home"></i> Home</a>
                         <a href="./categories.html">Categories</a>
-                        <span>Romance</span>
+                        <span><?=$name_cate?></span>
                     </div>
                 </div>
             </div>
@@ -57,7 +73,7 @@
             <div class="anime__details__content">
                 <div class="row">
                     <div class="col-lg-3">
-                        <div class="anime__details__pic set-bg" data-setbg="img/anime/details-pic.jpg">
+                        <div class="anime__details__pic set-bg" data-setbg="<?php echo $key['img'] ?>">
                             <div class="comment"><i class="fa fa-comments"></i> 11</div>
                             <div class="view"><i class="fa fa-eye"></i> 9141</div>
                         </div>
@@ -65,8 +81,8 @@
                     <div class="col-lg-9">
                         <div class="anime__details__text">
                             <div class="anime__details__title">
-                                <h3>Fate Stay Night: Unlimited Blade</h3>
-                                <span>フェイト／ステイナイト, Feito／sutei naito</span>
+                                <h3><?php echo $key['name'] ?></h3>
+                                <span><?php echo $key['other_name'] ?></span>
                             </div>
                             <div class="anime__details__rating">
                                 <div class="rating">
@@ -78,25 +94,22 @@
                                 </div>
                                 <span>1.029 Votes</span>
                             </div>
-                            <p>Every human inhabiting the world of Alcia is branded by a “Count” or a number written on
-                                their body. For Hina’s mother, her total drops to 0 and she’s pulled into the Abyss,
-                                never to be seen again. But her mother’s last words send Hina on a quest to find a
-                            legendary hero from the Waste War - the fabled Ace!</p>
+                            <p style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 2;line-height: 1.6rem;"><?php echo $key['detail'] ?></p>
                             <div class="anime__details__widget">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                         <ul>
-                                            <li><span>Type:</span> TV Series</li>
-                                            <li><span>Studios:</span> Lerche</li>
-                                            <li><span>Date aired:</span> Oct 02, 2019 to ?</li>
-                                            <li><span>Status:</span> Airing</li>
-                                            <li><span>Genre:</span> Action, Adventure, Fantasy, Magic</li>
+                                            <li><span>Type:</span> updating ...</li>
+                                            <li><span>Studios:</span> <?= $key['studio'] ?></li>
+                                            <li><span>Date aired:</span> <?= $key['date_start'] ?> to <?= $key['date_end'] ?></li>
+                                            <li><span>Status:</span> <?= $key['status'] ?></li>
+                                            <li><span>Genre:</span> <?= $key1['name'] ?></li>
                                         </ul>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <ul>
                                             <li><span>Scores:</span> 7.31 / 1,515</li>
-                                            <li><span>Rating:</span> 8.5 / 161 times</li>
+                                            <li><span>Rating:</span><?= $key['rating'] ?></li>
                                             <li><span>Duration:</span> 24 min/ep</li>
                                             <li><span>Quality:</span> HD</li>
                                             <li><span>Views:</span> 131,541</li>
@@ -217,7 +230,7 @@
             </div>
         </section>
         <!-- Anime Section End -->
-
+        <?php } }?>
         <!-- Footer Section Begin -->
         <?php include './inc/footer.php' ?>
           <!-- Footer Section End -->

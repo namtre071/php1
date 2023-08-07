@@ -14,7 +14,7 @@
             </div>
             <div class="row">
             <?php
-                $sql = "SELECT * FROM animes where is_trending = 1 order by id desc ";
+                $sql = "SELECT * FROM animes  order by id desc ";
                 $result = executeResult($sql);
                 foreach($result as $key){
                     $id_cate = $key['category'];
@@ -40,7 +40,7 @@
                             </ul>
                             
                             <h5><a href="#"><?php echo $name?></a></h5>
-                            <h6><a href="#"><?php echo $key['other_name']?></a></h56>
+                            <h6><a href="./anime-details.php?id=<?php echo $key['id']?>"><?php echo $key['other_name']?></a></h56>
                             
                         </div>
                         
