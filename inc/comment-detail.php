@@ -15,6 +15,7 @@
                             $ptime = $row['Timestamp'];
                             $user = 'select * from users where id = '.$row['UserID'];
                                 $us = executeResult($user);
+                                
                                 foreach($us as $row2) {
                             ?>
                             <div class="anime__review__item__pic">
@@ -34,7 +35,8 @@
                         </div>
                         <!-- Nhập bình luận -->
                         <?php
-                            $idcmt = "select id from users where username= '".$_SESSION['user']."'";
+                            $name1 = $_SESSION['user'];
+                            $idcmt = "select id from users where username= '".$name1."'";
                             $id = executeSingleResult($idcmt);
                             
                             if($id != null){
@@ -46,7 +48,6 @@
                                     $new = "INSERT INTO comments (UserID, Content,AnimeID) VALUES ('$id', '$bl','$id_cate_now')";
                                     
                                     if ($con->query($new) === TRUE) {
-                                        echo "<script>alert('Comment Success!');</script>";
                                         echo "<script>window.location.href='".$_SERVER['HTTP_REFERER']."'</script>";
                                         
                                     } else {

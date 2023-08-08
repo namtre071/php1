@@ -1,3 +1,4 @@
+
 <header class="header">
         <div class="container">
             <div class="row">
@@ -13,16 +14,22 @@
                         <nav class="header__menu mobile-menu">
                             <ul>
                                 <li class="active"><a href="./index.php">Homepage</a></li>
-                                <li><a href="./categories.php">Categories <span class="arrow_carrot-down"></span></a>
+                                
+                                <li>
+                                    <a href="./categories.php">Categories <span class="arrow_carrot-down"></span></a>
+                                    
                                     <ul class="dropdown">
-                                        <li><a href="./categories.php">Categories</a></li>
-                                        <li><a href="./anime-details.php">Anime Details</a></li>
-                                        <li><a href="./anime-watching.php">Anime Watching</a></li>
-                                        <li><a href="./blog-details.php">Blog Details</a></li>
-                                        <li><a href="./signup.php">Sign Up</a></li>
-                                        <li><a href="./login.php">Login</a></li>
+                                    <?php 
+                                        $cat = 'select name from categories';
+                                        $cate = executeResult($cat);
+                                        foreach ($cate as $key){
+                                    ?>
+                                        <li><a href="./categories.php?name=<?=$key['name']?>"><?=$key['name']?></a></li>
+                                        <?php }?>
                                     </ul>
+                                    
                                 </li>
+                                
                                 <li><a href="./blog.php">Our Blog</a></li>
                                 <li><a href="#">Contacts</a></li>
                             </ul>
