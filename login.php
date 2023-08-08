@@ -10,10 +10,12 @@
         if (mysqli_num_rows($result)>0 ) {
             $row = executeSingleResult($query);
             $fullname = $row['name'];
+            $username = $row['username'];
             if (password_verify($password, $row['password'])) {
                 // Successful login
                 $_SESSION['logined'] = true;
                 $_SESSION['username'] = $fullname;
+                $_SESSION['user'] = $username;
                 header("Location: index.php");
                 exit();
             } else {
